@@ -1,2 +1,2 @@
-# CSS-project-1-tabs
-Pure CSS tab interface
+# Pure CSS Tab Interface
+Tabs!!! No JavaScript allowed.
