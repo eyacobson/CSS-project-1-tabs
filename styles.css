@@ -1,0 +1,86 @@
+body {
+	font-family: Athiti, sans-serif;
+}
+
+.tabComponent {
+	margin: 50px auto;
+	width: 600px;
+	overflow: hidden; /* This is critical for hiding the left-most & right-most box shadows! */
+	position: relative;
+
+}
+
+input {
+	display: none;
+}
+
+label {
+	margin-top: 30px;
+	padding: 6px 0 6px 0;
+	float: left;
+	display: inline-block;
+	box-shadow: 8px 12px 25px 2px rgba(0,0,0,0.4);
+	font-size: 22px;
+	font-weight: bold;
+	width: 25%;
+	text-align: center;
+	background: #1dace5;
+	color: white;
+	position: relative; /* Needed b/c z-index only works on positioned elements */
+	cursor: pointer;
+	letter-spacing: 3px;
+	transition: all 0.3s ease-in-out;
+}
+
+/* Set stacking order, to prevent a tab's box shadow from hiding UNDER the subsequent tab -- higher number = closer to front */
+label:nth-of-type(3) {
+	z-index: 2;
+}
+
+label:nth-of-type(2) {
+	z-index: 3;
+}
+
+label:first-of-type {
+	z-index: 4;
+	border-top-left-radius: 10px;
+}
+
+label:last-of-type {
+	border-top-right-radius: 10px;
+}
+
+.content {
+	clear: both;
+	position: relative;
+	min-height: 1000px;		/* Need a set(but flexible) height to keep this element from collapsing due to <section> absolute positioning */
+}
+
+section {
+	background: #35393a;
+	padding: 10px;
+	color: white;
+	font-size: 18px;
+	clear: both;
+	position: absolute; /* Makes <section> elements all pile up behind the first one at the beginning */
+	transition: opacity 0.3s;
+	opacity: 0;
+	z-index: 6;
+}
+
+input:checked + label { /* Decrease top margin by 10px & add 10px to bottom padding to compensate */
+	background: #35393a;
+	margin-top: 15px;
+	padding: 6px 0 21px 0;
+	color: #1dace5;
+	font-weight: bold;
+	z-index: 5; /* When active, bring tab all the way to front relative to other tabs, or else shadow of tab to the left will CONTINUE to overlap w/ it, &
+				   create a line b/w bottom of the tab & the content area, b/c the shadow will prevent them from being the same color */
+}
+
+#tab1:checked ~ .content section:nth-of-type(1),
+#tab2:checked ~ .content section:nth-of-type(2),
+#tab3:checked ~ .content section:nth-of-type(3),
+#tab4:checked ~ .content section:nth-of-type(4) {
+	opacity: 1;
+}
